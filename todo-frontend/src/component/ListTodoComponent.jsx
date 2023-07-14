@@ -1,19 +1,30 @@
 import { useEffect, useState } from "react"
-import { retrieveAllTodos } from "../service/TodoApiService"
-import { Link } from "react-router-dom"
+import { deleteExistingTodo, retrieveAllTodos } from "../service/TodoApiService"
+import { Link, useNavigate } from "react-router-dom"
 
 const ListTodoComponent = () => {
 
     const [todos, setTodos] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         listTodos()
     }, [])
 
-    function listTodos(){
+    function listTodos() {
         retrieveAllTodos()
-        .then(response => setTodos(response.data))
-        .catch(error => console.error(error))
+            .then(response => setTodos(response.data))
+            .catch(error => console.error(error))
+    }
+
+    function updateTodo(id){
+        navigate(`/update-todo/${id}`)
+    }
+    
+    function deleteTodo(id){
+        deleteExistingTodo(id)
+        .then(navigate('/todos'))
+        .catch(error => console.log(error))
     }
 
     return (
@@ -28,6 +39,7 @@ const ListTodoComponent = () => {
                                 <th>Title</th>
                                 <th>Description</th>
                                 <th>Completed</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,6 +49,10 @@ const ListTodoComponent = () => {
                                         <td>{todo.title}</td>
                                         <td>{todo.description}</td>
                                         <td>{todo.completed ? 'Yes' : 'No'}</td>
+                                        <td>
+                                            <button className="btn btn-dark" onClick={() => updateTodo(todo.id)}>UPDATE</button>
+                                            <button className="btn btn-info mx-2" onClick={() => deleteTodo(todo.id)}>DELETE</button>
+                                        </td>
                                     </tr>
                                 )
                             }
