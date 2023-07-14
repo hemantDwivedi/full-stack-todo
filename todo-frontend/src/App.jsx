@@ -1,12 +1,21 @@
-import 'bootstrap/dist/css/bootstrap.min.css'
 import HeaderComponent from './component/HeaderComponent'
 import FooterComponent from './component/FooterComponent'
+import ListTodoComponent from './component/ListTodoComponent'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import TodoComponent from './component/TodoComponent'
 
 function App() {
   return (
     <>
-      <HeaderComponent />
-      <FooterComponent />
+      <BrowserRouter>
+        <HeaderComponent />
+      <Routes>
+        <Route path='/' element={<ListTodoComponent />} />
+        <Route path='/todos' element={<ListTodoComponent />} />
+        <Route path='/add-todo' element={<TodoComponent />} />
+      </Routes>
+        <FooterComponent />
+      </BrowserRouter>
     </>
   )
 }
