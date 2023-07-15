@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { deleteExistingTodo, retrieveAllTodos } from "../service/TodoApiService"
+import { completedTodo, deleteExistingTodo, retrieveAllTodos, unCompletedTodo } from "../service/TodoApiService"
 import { Link, useNavigate } from "react-router-dom"
 
 const ListTodoComponent = () => {
@@ -27,6 +27,18 @@ const ListTodoComponent = () => {
         .catch(error => console.log(error))
     }
 
+    function markCompletedTodo(id){
+        completedTodo(id)
+        .then(listTodos())
+        .catch(error => console.error(error))
+    }
+    
+    function markUncompletedTodo(id){
+        unCompletedTodo(id)
+        .then(listTodos())
+        .catch(error => console.error(error))
+    }
+
     return (
         <div>
             <div className="container mt-4">
@@ -39,6 +51,7 @@ const ListTodoComponent = () => {
                                 <th>Title</th>
                                 <th>Description</th>
                                 <th>Completed</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -49,6 +62,10 @@ const ListTodoComponent = () => {
                                         <td>{todo.title}</td>
                                         <td>{todo.description}</td>
                                         <td>{todo.completed ? 'Yes' : 'No'}</td>
+                                        <td>
+                                            <button className="btn btn-dark" onClick={() => markCompletedTodo(todo.id)}>COMPLETED</button>
+                                            <button className="btn btn-info mx-2" onClick={() => markUncompletedTodo(todo.id)}>UNCOMPLETED</button>
+                                        </td>
                                         <td>
                                             <button className="btn btn-dark" onClick={() => updateTodo(todo.id)}>UPDATE</button>
                                             <button className="btn btn-info mx-2" onClick={() => deleteTodo(todo.id)}>DELETE</button>

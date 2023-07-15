@@ -62,7 +62,7 @@ public class TodoServiceImpl implements TodoService {
         var todo = todoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Todo not exist with id:" + id));
         todo.setCompleted(Boolean.TRUE);
-        return entityMapper.modelMapper().map(todo, TodoDto.class);
+        return entityMapper.modelMapper().map(todoRepository.save(todo), TodoDto.class);
     }
 
     @Override
@@ -70,6 +70,6 @@ public class TodoServiceImpl implements TodoService {
         var todo = todoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Todo not exist with id:" + id));
         todo.setCompleted(Boolean.FALSE);
-        return entityMapper.modelMapper().map(todo, TodoDto.class);
+        return entityMapper.modelMapper().map(todoRepository.save(todo), TodoDto.class);
     }
 }
