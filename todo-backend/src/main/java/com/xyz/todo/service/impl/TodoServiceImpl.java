@@ -4,7 +4,7 @@ import com.xyz.todo.dto.TodoDto;
 import com.xyz.todo.entity.Todo;
 import com.xyz.todo.repository.TodoRepository;
 import com.xyz.todo.service.TodoService;
-import com.xyz.todo.service.exception.ResourceNotFoundException;
+import com.xyz.todo.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

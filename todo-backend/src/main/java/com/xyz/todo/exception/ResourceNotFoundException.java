@@ -1,4 +1,4 @@
-package com.xyz.todo.service.exception;
+package com.xyz.todo.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

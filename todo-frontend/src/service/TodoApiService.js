@@ -1,17 +1,27 @@
 import axios from "axios";
+import { apiClient } from "./ApiClient";
+import { getToken } from "./AuthApiService";
 
-const BASE_REST_API_URL = 'http://localhost:8080/api/v1/todos'
+axios.interceptors.request.use(function (config) {
+    
+    config.headers['Authorization'] = getToken();
 
-export const retrieveAllTodos = () => axios.get(BASE_REST_API_URL)
+    return config;
+  }, function (error) {
+    return Promise.reject(error);
+  });
 
-export const createTodo = (todo) => axios.post(BASE_REST_API_URL, todo)
+  
+export const retrieveAllTodos = () => apiClient.get('/todos')
 
-export const retrieveSpecificTodo = (id) => axios.get(BASE_REST_API_URL + '/' + id)
+export const createTodo = (todo) => apiClient.post(todo)
 
-export const updateExistingTodo = (todo, id) => axios.put(BASE_REST_API_URL + '/' + id, todo)
+export const retrieveSpecificTodo = (id) => apiClient.get(`/${id}`)
 
-export const deleteExistingTodo = (id) => axios.delete(BASE_REST_API_URL + '/' + id)
+export const updateExistingTodo = (todo, id) => apiClient.put(`/${id}`, todo)
 
-export const completedTodo = (id) => axios.patch(BASE_REST_API_URL + '/' + id + '/completed')
+export const deleteExistingTodo = (id) => apiClient.delete(`/${id}`)
 
-export const unCompletedTodo = (id) => axios.patch(BASE_REST_API_URL + '/' + id + '/uncompleted')
+export const completedTodo = (id) => apiClient.patch(`/${id}/completed`)
+
+export const unCompletedTodo = (id) => apiClient.patch(`/${id}/uncompleted`)
