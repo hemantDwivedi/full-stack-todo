@@ -1,4 +1,9 @@
-import { authApiClient } from './ApiClient'
+import axios from "axios";
+
+const authApiClient = axios.create({
+    
+  baseURL: 'http://localhost:8080/api/auth'
+})
 
 export const registerApi = (user) => authApiClient.post('/register', user)
 
